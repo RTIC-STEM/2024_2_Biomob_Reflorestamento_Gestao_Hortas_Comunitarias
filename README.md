@@ -36,11 +36,11 @@ O **Portal de Reflorestamento** é uma plataforma web que permite mapear e acomp
 
 - **APIs**: OpenStreetMap, Google Maps API
 
----
+- **dashboard**: PowerBI
 
 ## 👥 Time de Desenvolvimento
 
-- [@TioIlluminati](https://github.com/TioIlluminati) - PO, Power BI
+- [@TioIlluminati](https://github.com/TioIlluminati) - PO, Power BI, Backend
 - [@GiseleElly](https://github.com/GiseleElly) - Banco de Dados
 - [@7ayla](https://github.com/7ayla) - PO, Power BI
 - [@herculeslins](https://github.com/herculeslins) - Frontend, Figma
