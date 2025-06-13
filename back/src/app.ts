@@ -8,7 +8,7 @@ app.use(cors())
 app.use(express.json())
 app.use(router)
 
-export default app;
+export { app }
 
 
 

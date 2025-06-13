@@ -16,13 +16,12 @@
     }
   ],
   "env": {
-    "DB_HOST": "DB_HOST",
-    "DB_PORT": "DB_PORT",
-    "DB_DATABASE": "DB_DATABASE",
-    "DB_USER": "DB_USER",
-    "DB_PASSWORD": "DB_PASSWORD",
-    "PORT": "PORT",
-    "JWT_PASS": "JWT_PASS",
-    "JWT_EXPIRES": "JWT_EXPIRES"
+    "DB_HOST": "dpg-d0sfu63uibrs73ad1o10-a",
+    "DB_PORT": "5432",
+    "DB_DATABASE": "biomob_banco_de_dados",
+    "DB_USER": "biomob_banco_de_dados_user",
+    "DB_PASSWORD": "c5s2NCMhMcJignbiQjMmbzDRrNzuWX2P",
+    "JWT_PASS": "biomob",
+    "JWT_EXPIRES": "86400000"
   }
 }
