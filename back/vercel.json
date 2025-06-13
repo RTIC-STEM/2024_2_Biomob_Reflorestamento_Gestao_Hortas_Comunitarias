@@ -16,7 +16,7 @@
     }
   ],
   "env": {
-    "DB_HOST": "dpg-d0sfu63uibrs73ad1o10-a",
+    "DB_HOST": "dpg-d0sfu63uibrs73ad1o10-a.virginia-postgres.render.com",
     "DB_PORT": "5432",
     "DB_DATABASE": "biomob_banco_de_dados",
     "DB_USER": "biomob_banco_de_dados_user",
