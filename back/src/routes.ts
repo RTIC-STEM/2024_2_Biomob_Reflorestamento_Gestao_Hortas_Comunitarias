@@ -10,6 +10,8 @@ import { seedlingController } from "./controllers/seedlingController";
 import seedlingSchema from "./validation/seedlingSchema";
 import { refreshTokenController } from "./controllers/refreshTokenController"; 
 import refreshTokenSchema from "./validation/refreshTokenSchema"; 
+import { resetPasswordController } from "./controllers/resetPasswordController";
+import { requestResetCodeSchema, resetPasswordSchema } from "./validation/resetPasswordSchema"; 
 
 
 const router = express.Router();
@@ -20,7 +22,10 @@ router.post("/auth/login", validationBody(loginSchema) , authController.login );
 
 router.post("/auth/refresh-token", validationBody(refreshTokenSchema), refreshTokenController.refresh); 
 
-router.post("/reflorestation", validationBody(reflorestationSchema), reflorestationController.create ); // CORRIGIDO: Adicionado middleware de validação
+router.post("/auth/request-reset-code", validationBody(requestResetCodeSchema), resetPasswordController.requestResetCode); // Nova rota: solicitar código de redefinição
+router.post("/auth/reset-password", validationBody(resetPasswordSchema), resetPasswordController.resetPassword); // Nova rota: redefinir senha
+
+router.post("/reflorestation", validationBody(reflorestationSchema), reflorestationController.create ); 
 
 router.post("/seedling", validationBody(seedlingSchema), seedlingController.create );
 
