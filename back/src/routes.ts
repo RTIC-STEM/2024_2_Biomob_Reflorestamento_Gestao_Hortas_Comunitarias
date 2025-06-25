@@ -25,8 +25,12 @@ import { eventParticipantController } from "./controllers/eventParticipantContro
 import eventParticipantSchema from "./validation/eventParticipantSchema";
 import { educationalMaterialController } from "./controllers/educationalMaterialController"; 
 import educationalMaterialSchema from "./validation/educationalMaterialSchema";
-import { newsController } from "./controllers/newsController"; // Nova importação
-import newsSchema from "./validation/newsSchema"; // Nova importação
+import { newsController } from "./controllers/newsController"; 
+import newsSchema from "./validation/newsSchema";
+import { newsCategoryController } from "./controllers/newsCategoryController"; 
+import newsCategorySchema from "./validation/newsCategorySchema";
+import { newsToCategoryController } from "./controllers/newsToCategoryController"; // Nova importação
+import newsToCategorySchema from "./validation/newsToCategorySchema"; // Nova importação
 
 
 const router = express.Router();
@@ -80,13 +84,26 @@ router.put("/educational-materials/:id", ensureAuth, ensureRole(['gestor']), val
 router.delete("/educational-materials/:id", ensureAuth, ensureRole(['gestor']), educationalMaterialController.delete); 
 router.post("/educational-materials/:id/increment-download", ensureAuth, educationalMaterialController.incrementDownload); 
 
-// Rotas para Notícias
-router.post("/news", ensureAuth, ensureRole(['gestor']), validationBody(newsSchema), newsController.create); // Criar: Apenas para Gestores
-router.get("/news", ensureAuth, newsController.findAll); // Visualizar todas: Qualquer usuário autenticado
-router.get("/news/:id", ensureAuth, newsController.findById); // Visualizar por ID: Qualquer usuário autenticado
-router.get("/news/slug/:slug", ensureAuth, newsController.findBySlug); // Visualizar por Slug e incrementa views: Qualquer usuário autenticado
-router.put("/news/:id", ensureAuth, ensureRole(['gestor']), validationBody(newsSchema), newsController.update); // Atualizar: Apenas para Gestores
-router.delete("/news/:id", ensureAuth, ensureRole(['gestor']), newsController.delete); // Deletar: Apenas para Gestores
+router.post("/news", ensureAuth, ensureRole(['gestor']), validationBody(newsSchema), newsController.create); 
+router.get("/news", ensureAuth, newsController.findAll); 
+router.get("/news/:id", ensureAuth, newsController.findById); 
+router.get("/news/slug/:slug", ensureAuth, newsController.findBySlug); 
+router.put("/news/:id", ensureAuth, ensureRole(['gestor']), validationBody(newsSchema), newsController.update); 
+router.delete("/news/:id", ensureAuth, ensureRole(['gestor']), newsController.delete); 
+
+router.post("/news-categories", ensureAuth, ensureRole(['gestor']), validationBody(newsCategorySchema), newsCategoryController.create); 
+router.get("/news-categories", ensureAuth, newsCategoryController.findAll); 
+router.get("/news-categories/:id", ensureAuth, newsCategoryController.findById); 
+router.get("/news-categories/slug/:slug", ensureAuth, newsCategoryController.findBySlug); 
+router.put("/news-categories/:id", ensureAuth, ensureRole(['gestor']), validationBody(newsCategorySchema), newsCategoryController.update); 
+router.delete("/news-categories/:id", ensureAuth, ensureRole(['gestor']), newsCategoryController.delete); 
+
+// Rotas para Associações Notícia-Categoria
+router.post("/news/:newsId/categories/:categoryId", ensureAuth, ensureRole(['gestor']), validationBody(newsToCategorySchema), newsToCategoryController.create); // Criar associação: Apenas para Gestores
+router.get("/news-to-categories", ensureAuth, newsToCategoryController.findAll); // Visualizar todas associações: Qualquer usuário autenticado
+router.get("/news/:newsId/categories", ensureAuth, newsToCategoryController.findByNewsId); // Visualizar categorias de uma notícia: Qualquer usuário autenticado
+router.get("/categories/:categoryId/news", ensureAuth, newsToCategoryController.findByCategoryId); // Visualizar notícias de uma categoria: Qualquer usuário autenticado
+router.delete("/news/:newsId/categories/:categoryId", ensureAuth, ensureRole(['gestor']), newsToCategoryController.remove); // Remover associação: Apenas para Gestores
 
 
 export { router};
