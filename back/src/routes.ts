@@ -31,8 +31,10 @@ import { newsCategoryController } from "./controllers/newsCategoryController";
 import newsCategorySchema from "./validation/newsCategorySchema";
 import { newsToCategoryController } from "./controllers/newsToCategoryController"; 
 import newsToCategorySchema from "./validation/newsToCategorySchema";
-import { tagController } from "./controllers/tagController"; // Nova importação
-import tagSchema from "./validation/tagSchema"; // Nova importação
+import { newsToTagController } from "./controllers/newsToTagController"; // Nova importação
+import newsToTagSchema from "./validation/newsToTagSchema"; // Nova importação
+import { tagController } from "./controllers/tagController";
+import tagSchema from "./validation/tagSchema";
 
 
 const router = express.Router();
@@ -106,13 +108,19 @@ router.get("/news/:newsId/categories", ensureAuth, newsToCategoryController.find
 router.get("/categories/:categoryId/news", ensureAuth, newsToCategoryController.findByCategoryId); 
 router.delete("/news/:newsId/categories/:categoryId", ensureAuth, ensureRole(['gestor']), newsToCategoryController.remove); 
 
-// Rotas para Tags
-router.post("/tags", ensureAuth, ensureRole(['gestor']), validationBody(tagSchema), tagController.create); // Criar: Apenas para Gestores
-router.get("/tags", ensureAuth, tagController.findAll); // Visualizar todas: Qualquer usuário autenticado
-router.get("/tags/:id", ensureAuth, tagController.findById); // Visualizar por ID: Qualquer usuário autenticado
-router.get("/tags/slug/:slug", ensureAuth, tagController.findBySlug); // Visualizar por Slug: Qualquer usuário autenticado
-router.put("/tags/:id", ensureAuth, ensureRole(['gestor']), validationBody(tagSchema), tagController.update); // Atualizar: Apenas para Gestores
-router.delete("/tags/:id", ensureAuth, ensureRole(['gestor']), tagController.delete); // Deletar: Apenas para Gestores
+router.post("/tags", ensureAuth, ensureRole(['gestor']), validationBody(tagSchema), tagController.create); 
+router.get("/tags", ensureAuth, tagController.findAll); 
+router.get("/tags/:id", ensureAuth, tagController.findById); 
+router.get("/tags/slug/:slug", ensureAuth, tagController.findBySlug); 
+router.put("/tags/:id", ensureAuth, ensureRole(['gestor']), validationBody(tagSchema), tagController.update); 
+router.delete("/tags/:id", ensureAuth, ensureRole(['gestor']), tagController.delete); 
+
+// Rotas para Associações Notícia-Tag
+router.post("/news/:newsId/tags/:tagId", ensureAuth, ensureRole(['gestor']), validationBody(newsToTagSchema), newsToTagController.create); // Criar associação: Apenas para Gestores
+router.get("/news-to-tags", ensureAuth, newsToTagController.findAll); // Visualizar todas associações: Qualquer usuário autenticado
+router.get("/news/:newsId/tags", ensureAuth, newsToTagController.findByNewsId); // Visualizar tags de uma notícia: Qualquer usuário autenticado
+router.get("/tags/:tagId/news", ensureAuth, newsToTagController.findByTagId); // Visualizar notícias de uma tag: Qualquer usuário autenticado
+router.delete("/news/:newsId/tags/:tagId", ensureAuth, ensureRole(['gestor']), newsToTagController.remove); // Remover associação: Apenas para Gestores
 
 
 export { router};
