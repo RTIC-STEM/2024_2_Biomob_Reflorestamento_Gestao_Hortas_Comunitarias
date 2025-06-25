@@ -23,8 +23,10 @@ import { eventController } from "./controllers/eventController";
 import eventSchema from "./validation/eventSchema";
 import { eventParticipantController } from "./controllers/eventParticipantController"; 
 import eventParticipantSchema from "./validation/eventParticipantSchema";
-import { educationalMaterialController } from "./controllers/educationalMaterialController"; // Nova importação
-import educationalMaterialSchema from "./validation/educationalMaterialSchema"; // Nova importação
+import { educationalMaterialController } from "./controllers/educationalMaterialController"; 
+import educationalMaterialSchema from "./validation/educationalMaterialSchema";
+import { newsController } from "./controllers/newsController"; // Nova importação
+import newsSchema from "./validation/newsSchema"; // Nova importação
 
 
 const router = express.Router();
@@ -71,12 +73,20 @@ router.get("/events/:eventId/participants", ensureAuth, eventParticipantControll
 router.get("/event-participants", ensureAuth, ensureRole(['gestor']), eventParticipantController.findAll); 
 router.delete("/events/:eventId/participants/:userId", ensureAuth, eventParticipantController.cancel); 
 
-// Rotas para Materiais Educativos
-router.post("/educational-materials", ensureAuth, ensureRole(['gestor']), validationBody(educationalMaterialSchema), educationalMaterialController.create); // Criar: Apenas para Gestores
-router.get("/educational-materials", ensureAuth, educationalMaterialController.findAll); // Visualizar: Qualquer usuário autenticado
-router.get("/educational-materials/:id", ensureAuth, educationalMaterialController.findById); // Visualizar por ID: Qualquer usuário autenticado
-router.put("/educational-materials/:id", ensureAuth, ensureRole(['gestor']), validationBody(educationalMaterialSchema), educationalMaterialController.update); // Atualizar: Apenas para Gestores
-router.delete("/educational-materials/:id", ensureAuth, ensureRole(['gestor']), educationalMaterialController.delete); // Deletar: Apenas para Gestores
-router.post("/educational-materials/:id/increment-download", ensureAuth, educationalMaterialController.incrementDownload); // Incrementar Download: Qualquer usuário autenticado
+router.post("/educational-materials", ensureAuth, ensureRole(['gestor']), validationBody(educationalMaterialSchema), educationalMaterialController.create); 
+router.get("/educational-materials", ensureAuth, educationalMaterialController.findAll); 
+router.get("/educational-materials/:id", ensureAuth, educationalMaterialController.findById); 
+router.put("/educational-materials/:id", ensureAuth, ensureRole(['gestor']), validationBody(educationalMaterialSchema), educationalMaterialController.update); 
+router.delete("/educational-materials/:id", ensureAuth, ensureRole(['gestor']), educationalMaterialController.delete); 
+router.post("/educational-materials/:id/increment-download", ensureAuth, educationalMaterialController.incrementDownload); 
+
+// Rotas para Notícias
+router.post("/news", ensureAuth, ensureRole(['gestor']), validationBody(newsSchema), newsController.create); // Criar: Apenas para Gestores
+router.get("/news", ensureAuth, newsController.findAll); // Visualizar todas: Qualquer usuário autenticado
+router.get("/news/:id", ensureAuth, newsController.findById); // Visualizar por ID: Qualquer usuário autenticado
+router.get("/news/slug/:slug", ensureAuth, newsController.findBySlug); // Visualizar por Slug e incrementa views: Qualquer usuário autenticado
+router.put("/news/:id", ensureAuth, ensureRole(['gestor']), validationBody(newsSchema), newsController.update); // Atualizar: Apenas para Gestores
+router.delete("/news/:id", ensureAuth, ensureRole(['gestor']), newsController.delete); // Deletar: Apenas para Gestores
+
 
 export { router};
