@@ -35,8 +35,10 @@ import { newsToTagController } from "./controllers/newsToTagController";
 import newsToTagSchema from "./validation/newsToTagSchema";
 import { tagController } from "./controllers/tagController"; 
 import tagSchema from "./validation/tagSchema";
-import { newsCommentController } from "./controllers/newsCommentController"; // Nova importação
-import newsCommentSchema from "./validation/newsCommentSchema"; // Nova importação
+import { newsCommentController } from "./controllers/newsCommentController"; 
+import newsCommentSchema from "./validation/newsCommentSchema";
+import { newsMediaController } from "./controllers/newsMediaController"; // Nova importação
+import newsMediaSchema from "./validation/newsMediaSchema"; // Nova importação
 
 
 const router = express.Router();
@@ -123,14 +125,21 @@ router.get("/news/:newsId/tags", ensureAuth, newsToTagController.findByNewsId);
 router.get("/tags/:tagId/news", ensureAuth, newsToTagController.findByTagId); 
 router.delete("/news/:newsId/tags/:tagId", ensureAuth, ensureRole(['gestor']), newsToTagController.remove); 
 
-// Rotas para Comentários de Notícias
-router.post("/news/:newsId/comments", ensureAuth, validationBody(newsCommentSchema), newsCommentController.create); // Criar comentário: Qualquer usuário autenticado
-router.get("/news/:newsId/comments", ensureAuth, newsCommentController.findByNewsId); // Listar comentários de uma notícia: Qualquer usuário autenticado
-router.get("/comments", ensureAuth, newsCommentController.findAll); // Listar todos os comentários: Qualquer usuário autenticado
-router.get("/comments/:id", ensureAuth, newsCommentController.findById); // Buscar comentário por ID: Qualquer usuário autenticado
-router.put("/comments/:id", ensureAuth, newsCommentController.update); // Atualizar comentário: Gestor ou próprio autor
-router.put("/comments/:id/approve", ensureAuth, newsCommentController.approve); // Aprovar comentário: Apenas gestores
-router.delete("/comments/:id", ensureAuth, newsCommentController.delete); // Deletar comentário: Gestor ou próprio autor
+router.post("/news/:newsId/comments", ensureAuth, validationBody(newsCommentSchema), newsCommentController.create); 
+router.get("/news/:newsId/comments", ensureAuth, newsCommentController.findByNewsId); 
+router.get("/comments", ensureAuth, newsCommentController.findAll); 
+router.get("/comments/:id", ensureAuth, newsCommentController.findById); 
+router.put("/comments/:id", ensureAuth, newsCommentController.update); 
+router.put("/comments/:id/approve", ensureAuth, newsCommentController.approve); 
+router.delete("/comments/:id", ensureAuth, newsCommentController.delete); 
+
+// Rotas para Mídias de Notícias
+router.post("/news/:newsId/media", ensureAuth, ensureRole(['gestor']), validationBody(newsMediaSchema), newsMediaController.create); // Criar: Apenas para Gestores
+router.get("/news/:newsId/media", ensureAuth, newsMediaController.findByNewsId); // Visualizar mídias de uma notícia: Qualquer usuário autenticado
+router.get("/news-media", ensureAuth, newsMediaController.findAll); // Visualizar todas mídias: Qualquer usuário autenticado
+router.get("/news-media/:id", ensureAuth, newsMediaController.findById); // Visualizar por ID: Qualquer usuário autenticado
+router.put("/news-media/:id", ensureAuth, ensureRole(['gestor']), validationBody(newsMediaSchema), newsMediaController.update); // Atualizar: Apenas para Gestores
+router.delete("/news-media/:id", ensureAuth, ensureRole(['gestor']), newsMediaController.delete); // Deletar: Apenas para Gestores
 
 
 export { router};
