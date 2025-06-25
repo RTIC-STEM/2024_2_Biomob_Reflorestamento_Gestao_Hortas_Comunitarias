@@ -19,8 +19,10 @@ import { communityGardenController } from "./controllers/communityGardenControll
 import communityGardenSchema from "./validation/communityGardenSchema";
 import { gardenPlotController } from "./controllers/gardenPlotController"; 
 import gardenPlotSchema from "./validation/gardenPlotSchema";
-import { eventController } from "./controllers/eventController"; // Nova importação
-import eventSchema from "./validation/eventSchema"; // Nova importação
+import { eventController } from "./controllers/eventController"; 
+import eventSchema from "./validation/eventSchema";
+import { eventParticipantController } from "./controllers/eventParticipantController"; // Nova importação
+import eventParticipantSchema from "./validation/eventParticipantSchema"; // Nova importação
 
 
 const router = express.Router();
@@ -56,12 +58,17 @@ router.get("/community-gardens/:gardenId/plots", ensureAuth, gardenPlotControlle
 router.put("/garden-plots/:id", ensureAuth, ensureRole(['gestor']), validationBody(gardenPlotSchema), gardenPlotController.update); 
 router.delete("/garden-plots/:id", ensureAuth, ensureRole(['gestor']), gardenPlotController.delete); 
 
-// Rotas para Eventos
-router.post("/events", ensureAuth, ensureRole(['gestor']), validationBody(eventSchema), eventController.create); // Criar: Apenas para Gestores
-router.get("/events", ensureAuth, eventController.findAll); // Visualizar: Para qualquer usuário autenticado
-router.get("/events/:id", ensureAuth, eventController.findById); // Visualizar por ID: Para qualquer usuário autenticado
-router.put("/events/:id", ensureAuth, ensureRole(['gestor']), validationBody(eventSchema), eventController.update); // Atualizar: Apenas para Gestores
-router.delete("/events/:id", ensureAuth, ensureRole(['gestor']), eventController.delete); // Deletar: Apenas para Gestores
+router.post("/events", ensureAuth, ensureRole(['gestor']), validationBody(eventSchema), eventController.create); 
+router.get("/events", ensureAuth, eventController.findAll); 
+router.get("/events/:id", ensureAuth, eventController.findById); 
+router.put("/events/:id", ensureAuth, ensureRole(['gestor']), validationBody(eventSchema), eventController.update); 
+router.delete("/events/:id", ensureAuth, ensureRole(['gestor']), eventController.delete); 
+
+// Rotas para Participantes de Eventos
+router.post("/events/:eventId/participants", ensureAuth, validationBody(eventParticipantSchema), eventParticipantController.register); // Registrar participação: Qualquer usuário autenticado
+router.get("/events/:eventId/participants", ensureAuth, eventParticipantController.findByEventId); // Listar participantes de um evento: Qualquer usuário autenticado
+router.get("/event-participants", ensureAuth, ensureRole(['gestor']), eventParticipantController.findAll); // Listar TODOS os participantes: Apenas gestores
+router.delete("/events/:eventId/participants/:userId", ensureAuth, eventParticipantController.cancel); // Cancelar participação: Próprio usuário ou gestor
 
 
 export { router};
