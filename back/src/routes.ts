@@ -31,10 +31,12 @@ import { newsCategoryController } from "./controllers/newsCategoryController";
 import newsCategorySchema from "./validation/newsCategorySchema";
 import { newsToCategoryController } from "./controllers/newsToCategoryController"; 
 import newsToCategorySchema from "./validation/newsToCategorySchema";
-import { newsToTagController } from "./controllers/newsToTagController"; // Nova importação
-import newsToTagSchema from "./validation/newsToTagSchema"; // Nova importação
-import { tagController } from "./controllers/tagController";
+import { newsToTagController } from "./controllers/newsToTagController"; 
+import newsToTagSchema from "./validation/newsToTagSchema";
+import { tagController } from "./controllers/tagController"; 
 import tagSchema from "./validation/tagSchema";
+import { newsCommentController } from "./controllers/newsCommentController"; // Nova importação
+import newsCommentSchema from "./validation/newsCommentSchema"; // Nova importação
 
 
 const router = express.Router();
@@ -115,12 +117,20 @@ router.get("/tags/slug/:slug", ensureAuth, tagController.findBySlug);
 router.put("/tags/:id", ensureAuth, ensureRole(['gestor']), validationBody(tagSchema), tagController.update); 
 router.delete("/tags/:id", ensureAuth, ensureRole(['gestor']), tagController.delete); 
 
-// Rotas para Associações Notícia-Tag
-router.post("/news/:newsId/tags/:tagId", ensureAuth, ensureRole(['gestor']), validationBody(newsToTagSchema), newsToTagController.create); // Criar associação: Apenas para Gestores
-router.get("/news-to-tags", ensureAuth, newsToTagController.findAll); // Visualizar todas associações: Qualquer usuário autenticado
-router.get("/news/:newsId/tags", ensureAuth, newsToTagController.findByNewsId); // Visualizar tags de uma notícia: Qualquer usuário autenticado
-router.get("/tags/:tagId/news", ensureAuth, newsToTagController.findByTagId); // Visualizar notícias de uma tag: Qualquer usuário autenticado
-router.delete("/news/:newsId/tags/:tagId", ensureAuth, ensureRole(['gestor']), newsToTagController.remove); // Remover associação: Apenas para Gestores
+router.post("/news/:newsId/tags/:tagId", ensureAuth, ensureRole(['gestor']), validationBody(newsToTagSchema), newsToTagController.create); 
+router.get("/news-to-tags", ensureAuth, newsToTagController.findAll); 
+router.get("/news/:newsId/tags", ensureAuth, newsToTagController.findByNewsId); 
+router.get("/tags/:tagId/news", ensureAuth, newsToTagController.findByTagId); 
+router.delete("/news/:newsId/tags/:tagId", ensureAuth, ensureRole(['gestor']), newsToTagController.remove); 
+
+// Rotas para Comentários de Notícias
+router.post("/news/:newsId/comments", ensureAuth, validationBody(newsCommentSchema), newsCommentController.create); // Criar comentário: Qualquer usuário autenticado
+router.get("/news/:newsId/comments", ensureAuth, newsCommentController.findByNewsId); // Listar comentários de uma notícia: Qualquer usuário autenticado
+router.get("/comments", ensureAuth, newsCommentController.findAll); // Listar todos os comentários: Qualquer usuário autenticado
+router.get("/comments/:id", ensureAuth, newsCommentController.findById); // Buscar comentário por ID: Qualquer usuário autenticado
+router.put("/comments/:id", ensureAuth, newsCommentController.update); // Atualizar comentário: Gestor ou próprio autor
+router.put("/comments/:id/approve", ensureAuth, newsCommentController.approve); // Aprovar comentário: Apenas gestores
+router.delete("/comments/:id", ensureAuth, newsCommentController.delete); // Deletar comentário: Gestor ou próprio autor
 
 
 export { router};
