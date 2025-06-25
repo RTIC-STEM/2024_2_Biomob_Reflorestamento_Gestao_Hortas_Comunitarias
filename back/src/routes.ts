@@ -21,8 +21,10 @@ import { gardenPlotController } from "./controllers/gardenPlotController";
 import gardenPlotSchema from "./validation/gardenPlotSchema";
 import { eventController } from "./controllers/eventController"; 
 import eventSchema from "./validation/eventSchema";
-import { eventParticipantController } from "./controllers/eventParticipantController"; // Nova importação
-import eventParticipantSchema from "./validation/eventParticipantSchema"; // Nova importação
+import { eventParticipantController } from "./controllers/eventParticipantController"; 
+import eventParticipantSchema from "./validation/eventParticipantSchema";
+import { educationalMaterialController } from "./controllers/educationalMaterialController"; // Nova importação
+import educationalMaterialSchema from "./validation/educationalMaterialSchema"; // Nova importação
 
 
 const router = express.Router();
@@ -64,11 +66,17 @@ router.get("/events/:id", ensureAuth, eventController.findById);
 router.put("/events/:id", ensureAuth, ensureRole(['gestor']), validationBody(eventSchema), eventController.update); 
 router.delete("/events/:id", ensureAuth, ensureRole(['gestor']), eventController.delete); 
 
-// Rotas para Participantes de Eventos
-router.post("/events/:eventId/participants", ensureAuth, validationBody(eventParticipantSchema), eventParticipantController.register); // Registrar participação: Qualquer usuário autenticado
-router.get("/events/:eventId/participants", ensureAuth, eventParticipantController.findByEventId); // Listar participantes de um evento: Qualquer usuário autenticado
-router.get("/event-participants", ensureAuth, ensureRole(['gestor']), eventParticipantController.findAll); // Listar TODOS os participantes: Apenas gestores
-router.delete("/events/:eventId/participants/:userId", ensureAuth, eventParticipantController.cancel); // Cancelar participação: Próprio usuário ou gestor
+router.post("/events/:eventId/participants", ensureAuth, validationBody(eventParticipantSchema), eventParticipantController.register); 
+router.get("/events/:eventId/participants", ensureAuth, eventParticipantController.findByEventId); 
+router.get("/event-participants", ensureAuth, ensureRole(['gestor']), eventParticipantController.findAll); 
+router.delete("/events/:eventId/participants/:userId", ensureAuth, eventParticipantController.cancel); 
 
+// Rotas para Materiais Educativos
+router.post("/educational-materials", ensureAuth, ensureRole(['gestor']), validationBody(educationalMaterialSchema), educationalMaterialController.create); // Criar: Apenas para Gestores
+router.get("/educational-materials", ensureAuth, educationalMaterialController.findAll); // Visualizar: Qualquer usuário autenticado
+router.get("/educational-materials/:id", ensureAuth, educationalMaterialController.findById); // Visualizar por ID: Qualquer usuário autenticado
+router.put("/educational-materials/:id", ensureAuth, ensureRole(['gestor']), validationBody(educationalMaterialSchema), educationalMaterialController.update); // Atualizar: Apenas para Gestores
+router.delete("/educational-materials/:id", ensureAuth, ensureRole(['gestor']), educationalMaterialController.delete); // Deletar: Apenas para Gestores
+router.post("/educational-materials/:id/increment-download", ensureAuth, educationalMaterialController.incrementDownload); // Incrementar Download: Qualquer usuário autenticado
 
 export { router};
