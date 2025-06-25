@@ -17,8 +17,10 @@ import seedlingGrowthRecordSchema from "./validation/seedlingGrowthRecordSchema"
 import { ensureRole } from "./middlewares/ensureRole";
 import { communityGardenController } from "./controllers/communityGardenController"; 
 import communityGardenSchema from "./validation/communityGardenSchema";
-import { gardenPlotController } from "./controllers/gardenPlotController"; // Nova importação
-import gardenPlotSchema from "./validation/gardenPlotSchema"; // Nova importação
+import { gardenPlotController } from "./controllers/gardenPlotController"; 
+import gardenPlotSchema from "./validation/gardenPlotSchema";
+import { eventController } from "./controllers/eventController"; // Nova importação
+import eventSchema from "./validation/eventSchema"; // Nova importação
 
 
 const router = express.Router();
@@ -47,13 +49,19 @@ router.get("/community-gardens/:id", ensureAuth, communityGardenController.findB
 router.put("/community-gardens/:id", ensureAuth, ensureRole(['gestor']), validationBody(communityGardenSchema), communityGardenController.update); 
 router.delete("/community-gardens/:id", ensureAuth, ensureRole(['gestor']), communityGardenController.delete); 
 
-// Rotas para Lotes de Horta
-router.post("/garden-plots", ensureAuth, ensureRole(['gestor']), validationBody(gardenPlotSchema), gardenPlotController.create); // Criar: Apenas para Gestores
-router.get("/garden-plots", ensureAuth, gardenPlotController.findAll); // Visualizar: Para qualquer usuário autenticado
-router.get("/garden-plots/:id", ensureAuth, gardenPlotController.findById); // Visualizar por ID: Para qualquer usuário autenticado
-router.get("/community-gardens/:gardenId/plots", ensureAuth, gardenPlotController.findByGardenId); // Visualizar lotes por ID da Horta: Para qualquer usuário autenticado
-router.put("/garden-plots/:id", ensureAuth, ensureRole(['gestor']), validationBody(gardenPlotSchema), gardenPlotController.update); // Atualizar: Apenas para Gestores
-router.delete("/garden-plots/:id", ensureAuth, ensureRole(['gestor']), gardenPlotController.delete); // Deletar: Apenas para Gestores
+router.post("/garden-plots", ensureAuth, ensureRole(['gestor']), validationBody(gardenPlotSchema), gardenPlotController.create); 
+router.get("/garden-plots", ensureAuth, gardenPlotController.findAll); 
+router.get("/garden-plots/:id", ensureAuth, gardenPlotController.findById); 
+router.get("/community-gardens/:gardenId/plots", ensureAuth, gardenPlotController.findByGardenId); 
+router.put("/garden-plots/:id", ensureAuth, ensureRole(['gestor']), validationBody(gardenPlotSchema), gardenPlotController.update); 
+router.delete("/garden-plots/:id", ensureAuth, ensureRole(['gestor']), gardenPlotController.delete); 
+
+// Rotas para Eventos
+router.post("/events", ensureAuth, ensureRole(['gestor']), validationBody(eventSchema), eventController.create); // Criar: Apenas para Gestores
+router.get("/events", ensureAuth, eventController.findAll); // Visualizar: Para qualquer usuário autenticado
+router.get("/events/:id", ensureAuth, eventController.findById); // Visualizar por ID: Para qualquer usuário autenticado
+router.put("/events/:id", ensureAuth, ensureRole(['gestor']), validationBody(eventSchema), eventController.update); // Atualizar: Apenas para Gestores
+router.delete("/events/:id", ensureAuth, ensureRole(['gestor']), eventController.delete); // Deletar: Apenas para Gestores
 
 
 export { router};
