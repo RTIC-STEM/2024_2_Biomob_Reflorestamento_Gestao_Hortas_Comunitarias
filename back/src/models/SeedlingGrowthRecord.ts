@@ -28,10 +28,10 @@ export const SeedlingGrowthRecord = sequelize.define<SeedlingGrowthRecordInstanc
     type: DataTypes.UUID,
     allowNull: false,
     references: {
-      model: 'SEEDLINGS', 
+      model: 'seedlings', // Nome da tabela de mudas em minúsculas
       key: 'id',
     },
-    onDelete: 'CASCADE',
+    onDelete: 'cascade', // Se a muda for deletada, o registro de crescimento também será removido
   },
   recordDate: {
     type: DataTypes.DATEONLY,
@@ -57,7 +57,7 @@ export const SeedlingGrowthRecord = sequelize.define<SeedlingGrowthRecordInstanc
     type: DataTypes.UUID,
     allowNull: false,
     references: {
-      model: 'USERS', 
+      model: 'users', // Nome da tabela de usuários em minúsculas
       key: 'id',
     },
   },
@@ -67,7 +67,7 @@ export const SeedlingGrowthRecord = sequelize.define<SeedlingGrowthRecordInstanc
     allowNull: false,
   },
 }, {
-  tableName: 'SEEDLING_GROWTH_RECORDS',
+  tableName: 'seedling_growth_records', // Nome da tabela em minúsculas
   timestamps: false, // Esta tabela não tem UPDATED_AT, então defini como false
   createdAt: 'created_at',
 });

@@ -25,10 +25,10 @@ export const RefreshToken = sequelize.define<RefreshTokenInstance, RefreshTokenA
     type: DataTypes.UUID,
     allowNull: false,
     references: {
-      model: 'USERS',
+      model: 'users', // Nome da tabela de usuários em minúsculas
       key: 'id',
     },
-    onDelete: 'CASCADE',
+    onDelete: 'cascade', // Se o usuário for deletado, o token também será removido
   },
   token: {
     type: DataTypes.STRING(255),
@@ -49,7 +49,7 @@ export const RefreshToken = sequelize.define<RefreshTokenInstance, RefreshTokenA
     allowNull: false,
   },
 }, {
-  tableName: 'REFRESH_TOKENS',
+  tableName: 'refresh_tokens', // Nome da tabela em minúsculas
   timestamps: true,
   createdAt: 'created_at',
   updatedAt: 'updated_at',

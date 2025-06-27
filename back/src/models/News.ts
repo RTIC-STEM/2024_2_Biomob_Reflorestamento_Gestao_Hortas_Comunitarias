@@ -53,7 +53,7 @@ export const News = sequelize.define<NewsInstance, NewsAttributes>('News', {
     type: DataTypes.UUID,
     allowNull: false,
     references: {
-      model: 'USERS',
+      model: 'users', // Nome da tabela de usuários
       key: 'id',
     },
   },
@@ -87,7 +87,7 @@ export const News = sequelize.define<NewsInstance, NewsAttributes>('News', {
     allowNull: false,
   },
 }, {
-  tableName: 'NEWS',
+  tableName: 'news', // Nome da tabela em minúsculas
   timestamps: true,
   createdAt: 'created_at',
   updatedAt: 'updated_at',

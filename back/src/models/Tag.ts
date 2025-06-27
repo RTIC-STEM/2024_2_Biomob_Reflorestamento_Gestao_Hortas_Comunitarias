@@ -35,7 +35,7 @@ export const Tag = sequelize.define<TagInstance, TagAttributes>('Tag', {
     allowNull: false,
   },
 }, {
-  tableName: 'TAGS',
+  tableName: 'tags', // Nome da tabela em minúsculas
   timestamps: true, // Apenas createdAt, mas Sequelize precisa do 'true' para gerenciar
   createdAt: 'created_at',
   updatedAt: false, // Explicitamente desativado para updatedAt, pois não existe na tabela

@@ -25,10 +25,10 @@ export const ResetCode = sequelize.define<ResetCodeInstance, ResetCodeAttributes
     type: DataTypes.UUID,
     allowNull: false,
     references: {
-      model: 'USERS',
+      model: 'users', // Nome da tabela de usuários em minúsculas
       key: 'id',
     },
-    onDelete: 'CASCADE',
+    onDelete: 'cascade', // Se o usuário for deletado, o código de redefinição também será removido
   },
   code: {
     type: DataTypes.STRING(20),
@@ -49,7 +49,7 @@ export const ResetCode = sequelize.define<ResetCodeInstance, ResetCodeAttributes
     allowNull: false,
   },
 }, {
-  tableName: 'RESET_CODES',
+  tableName: 'reset_codes', // Nome da tabela em minúsculas
   timestamps: false, // Esta tabela não tem UPDATED_AT, então defini como false
   createdAt: 'created_at',
 });

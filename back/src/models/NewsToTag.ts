@@ -23,19 +23,19 @@ export const NewsToTag = sequelize.define<NewsToTagInstance, NewsToTagAttributes
     type: DataTypes.UUID,
     allowNull: false,
     references: {
-      model: 'NEWS', 
+      model: 'news', // Nome da tabela de notícias em maiúsculas
       key: 'id',
     },
-    onDelete: 'CASCADE', 
+    onDelete: 'cascade', 
   },
   tagId: {
     type: DataTypes.UUID,
     allowNull: false,
     references: {
-      model: 'TAGS', 
+      model: 'tags', // Nome da tabela de tags em minúsculas
       key: 'id',
     },
-    onDelete: 'CASCADE', 
+    onDelete: 'cascade', // Se a tag for deletada, as associações também serão removidas
   },
   createdAt: {
     type: DataTypes.DATE,
@@ -43,7 +43,7 @@ export const NewsToTag = sequelize.define<NewsToTagInstance, NewsToTagAttributes
     allowNull: false,
   },
 }, {
-  tableName: 'NEWS_TO_TAGS',
+  tableName: 'news_to_tags', // Nome da tabela em minúsculas
   timestamps: false, // Esta tabela não tem UPDATED_AT
   createdAt: 'created_at',
 });

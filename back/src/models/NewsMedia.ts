@@ -26,10 +26,10 @@ export const NewsMedia = sequelize.define<NewsMediaInstance, NewsMediaAttributes
     type: DataTypes.UUID,
     allowNull: false,
     references: {
-      model: 'NEWS', 
+      model: 'news', // Nome da tabela de notícias em minúsculas
       key: 'id',
     },
-    onDelete: 'CASCADE', // Se a notícia for deletada, suas mídias também
+    onDelete: 'cascade', // Se a notícia for deletada, suas mídias também
   },
   fileUrl: {
     type: DataTypes.TEXT, // Usamos TEXT para URLs
@@ -53,7 +53,7 @@ export const NewsMedia = sequelize.define<NewsMediaInstance, NewsMediaAttributes
     allowNull: false,
   },
 }, {
-  tableName: 'NEWS_MEDIA',
+  tableName: 'news_media', // Nome da tabela em minúsculas
   timestamps: false, // Esta tabela não tem UPDATED_AT
   createdAt: 'created_at',
 });

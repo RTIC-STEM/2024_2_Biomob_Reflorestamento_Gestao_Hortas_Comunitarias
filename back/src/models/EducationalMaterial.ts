@@ -49,7 +49,7 @@ export const EducationalMaterial = sequelize.define<EducationalMaterialInstance,
     type: DataTypes.UUID,
     allowNull: false,
     references: {
-      model: 'USERS', 
+      model: 'users', // Nome da tabela de usuários
       key: 'id',
     },
   },
@@ -69,7 +69,7 @@ export const EducationalMaterial = sequelize.define<EducationalMaterialInstance,
     allowNull: false,
   },
 }, {
-  tableName: 'EDUCATIONAL_MATERIALS',
+  tableName: 'educational_materials',
   timestamps: true,
   createdAt: 'created_at',
   updatedAt: 'updated_at',

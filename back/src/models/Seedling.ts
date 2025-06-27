@@ -32,10 +32,10 @@ const Seedling = sequelize.define<SeedlingInstance, SeedlingAttributes>('Seedlin
     type: DataTypes.UUID,
     allowNull: false,
     references: {
-      model: 'REFLORESTATION_AREAS',
+      model: 'reforestation_areas', // Nome da tabela de áreas de reflorestamento em minúsculas
       key: 'id',
     },
-    onDelete: 'CASCADE',
+    onDelete: 'cascade', // Se a área de reflorestamento for deletada, as mudas também serão
   },
   speciesName: {
     type: DataTypes.STRING(255),
@@ -47,7 +47,7 @@ const Seedling = sequelize.define<SeedlingInstance, SeedlingAttributes>('Seedlin
     type: DataTypes.DATEONLY,
   },
   coordinates: {
-    type: DataTypes.GEOMETRY('POINT'),
+    type: DataTypes.GEOMETRY('point'), // Para coordenadas geográficas
   },
   currentHeight: {
     type: DataTypes.DECIMAL(6, 2),
@@ -75,7 +75,7 @@ const Seedling = sequelize.define<SeedlingInstance, SeedlingAttributes>('Seedlin
     defaultValue: DataTypes.NOW,
   }
 }, {
-  tableName: 'SEEDLINGS',
+  tableName: 'seedlings', // Nome da tabela em minúsculas
   timestamps: true,
   createdAt: 'created_at',
   updatedAt: 'updated_at',

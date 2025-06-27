@@ -94,7 +94,7 @@ export const CommunityGarden = sequelize.define<CommunityGardenInstance, Communi
     type: DataTypes.UUID,
     allowNull: true,
     references: {
-      model: 'USERS',
+      model: 'users', // Certifique-se que 'users' está em minúsculas também
       key: 'id',
     },
   },
@@ -113,7 +113,7 @@ export const CommunityGarden = sequelize.define<CommunityGardenInstance, Communi
     allowNull: false,
   },
 }, {
-  tableName: 'COMMUNITY_GARDENS',
+  tableName: 'community_gardens',
   timestamps: true,
   createdAt: 'created_at',
   updatedAt: 'updated_at',

@@ -23,19 +23,19 @@ export const NewsToCategory = sequelize.define<NewsToCategoryInstance, NewsToCat
     type: DataTypes.UUID,
     allowNull: false,
     references: {
-      model: 'NEWS', 
+      model: 'news', // Nome da tabela de notícias em minúsculas
       key: 'id',
     },
-    onDelete: 'CASCADE', 
+    onDelete: 'cascade', // Se a notícia for deletada, suas categorias também
   },
   categoryId: {
     type: DataTypes.UUID,
     allowNull: false,
     references: {
-      model: 'NEWS_CATEGORIES', 
+      model: 'news_categories', // Nome da tabela de categorias de notícias em minúsculas
       key: 'id',
     },
-    onDelete: 'CASCADE', 
+    onDelete: 'cascade', // Se a categoria for deletada, as associações também serão removidas
   },
   createdAt: {
     type: DataTypes.DATE,
@@ -43,7 +43,7 @@ export const NewsToCategory = sequelize.define<NewsToCategoryInstance, NewsToCat
     allowNull: false,
   },
 }, {
-  tableName: 'NEWS_TO_CATEGORIES',
+  tableName: 'news_to_categories', // Nome da tabela em minúsculas
   timestamps: false, // Esta tabela não tem UPDATED_AT
   createdAt: 'created_at',
 });

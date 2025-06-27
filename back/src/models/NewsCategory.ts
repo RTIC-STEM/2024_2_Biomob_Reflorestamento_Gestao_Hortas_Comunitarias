@@ -46,7 +46,7 @@ export const NewsCategory = sequelize.define<NewsCategoryInstance, NewsCategoryA
     allowNull: false,
   },
 }, {
-  tableName: 'NEWS_CATEGORIES',
+  tableName: 'news_categories', // Nome da tabela em minúsculas
   timestamps: true,
   createdAt: 'created_at',
   updatedAt: 'updated_at',

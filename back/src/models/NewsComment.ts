@@ -27,16 +27,16 @@ export const NewsComment = sequelize.define<NewsCommentInstance, NewsCommentAttr
     type: DataTypes.UUID,
     allowNull: false,
     references: {
-      model: 'NEWS',
+      model: 'news', // Nome da tabela de notícias em minúsculas
       key: 'id',
     },
-    onDelete: 'CASCADE', // Se a notícia for deletada, seus comentários também
+    onDelete: 'cascade', // Se a notícia for deletada, seus comentários também
   },
   userId: {
     type: DataTypes.UUID,
     allowNull: false,
     references: {
-      model: 'USERS',
+      model: 'users', // Nome da tabela de usuários em minúsculas
       key: 'id',
     },
   },
@@ -44,10 +44,10 @@ export const NewsComment = sequelize.define<NewsCommentInstance, NewsCommentAttr
     type: DataTypes.UUID,
     allowNull: true, // Pode ser nulo para comentários de nível superior
     references: {
-      model: 'NEWS_COMMENTS', // Auto-referência para comentários aninhados
+      model: 'news_comments', // Auto-referência para comentários aninhados
       key: 'id',
     },
-    onDelete: 'SET NULL', // Se o comentário pai for deletado, o filho não é deletado, apenas desvinculado
+    onDelete: 'set null', // Se o comentário pai for deletado, o filho não é deletado, apenas desvinculado
   },
   content: {
     type: DataTypes.TEXT,
@@ -69,7 +69,7 @@ export const NewsComment = sequelize.define<NewsCommentInstance, NewsCommentAttr
     allowNull: false,
   },
 }, {
-  tableName: 'NEWS_COMMENTS',
+  tableName: 'news_comments', // Nome da tabela em minúsculas
   timestamps: true,
   createdAt: 'created_at',
   updatedAt: 'updated_at',

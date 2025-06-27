@@ -24,16 +24,16 @@ export const EventParticipant = sequelize.define<EventParticipantInstance, Event
     type: DataTypes.UUID,
     allowNull: false,
     references: {
-      model: 'EVENTS', 
+      model: 'events', // Nome da tabela de eventos
       key: 'id',
     },
-    onDelete: 'CASCADE', // Se o evento for deletado, a participação também
+    onDelete: 'cascade', // Se o evento for deletado, a participação também
   },
   userId: {
     type: DataTypes.UUID,
     allowNull: false,
     references: {
-      model: 'USERS', 
+      model: 'users', // Nome da tabela de usuários
       key: 'id',
     },
   },
@@ -48,7 +48,7 @@ export const EventParticipant = sequelize.define<EventParticipantInstance, Event
     allowNull: false,
   },
 }, {
-  tableName: 'EVENTS_PARTICIPANTS',
+  tableName: 'event_participants', // Nome da tabela em minúsculas
   timestamps: false, // Esta tabela não tem UPDATED_AT
   createdAt: 'created_at',
 });

@@ -28,10 +28,10 @@ export const GardenPlot = sequelize.define<GardenPlotInstance, GardenPlotAttribu
     type: DataTypes.UUID,
     allowNull: false,
     references: {
-      model: 'COMMUNITY_GARDENS', // Nome da tabela referenciada
+      model: 'community_gardens', // Nome da tabela referenciada
       key: 'id',
     },
-    onDelete: 'CASCADE', // Se a horta for deletada, seus lotes também serão
+    onDelete: 'cascade', // Se a horta for deletada, seus lotes também serão
   },
   plotNumber: {
     type: DataTypes.STRING(20),
@@ -45,7 +45,7 @@ export const GardenPlot = sequelize.define<GardenPlotInstance, GardenPlotAttribu
     type: DataTypes.UUID,
     allowNull: true,
     references: {
-      model: 'USERS', // Nome da tabela referenciada
+      model: 'users', // Nome da tabela referenciada
       key: 'id',
     },
   },
@@ -68,7 +68,7 @@ export const GardenPlot = sequelize.define<GardenPlotInstance, GardenPlotAttribu
     allowNull: false,
   },
 }, {
-  tableName: 'GARDEN_PLOTS',
+  tableName: 'garden_plots', // Nome da tabela em minúsculas
   timestamps: true,
   createdAt: 'created_at',
   updatedAt: 'updated_at',

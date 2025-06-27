@@ -60,7 +60,7 @@ export const Event = sequelize.define<EventInstance, EventAttributes>('Event', {
     type: DataTypes.UUID,
     allowNull: true,
     references: {
-      model: 'REFLORESTATION_AREAS', 
+      model: 'reforestation_areas', // Nome da tabela de áreas de reflorestamento
       key: 'id',
     },
     onDelete: 'SET NULL', // Se a área de reflorestamento for deletada, a FK se torna NULL
@@ -69,7 +69,7 @@ export const Event = sequelize.define<EventInstance, EventAttributes>('Event', {
     type: DataTypes.UUID,
     allowNull: true,
     references: {
-      model: 'COMMUNITY_GARDENS', 
+      model: 'community_gardens', // Nome da tabela de hortas comunitárias
       key: 'id',
     },
     onDelete: 'SET NULL', // Se a horta for deletada, a FK se torna NULL
@@ -93,7 +93,7 @@ export const Event = sequelize.define<EventInstance, EventAttributes>('Event', {
     allowNull: false,
   },
 }, {
-  tableName: 'EVENTS',
+  tableName: 'events', // Nome da tabela em minúsculas
   timestamps: true,
   createdAt: 'created_at',
   updatedAt: 'updated_at',
