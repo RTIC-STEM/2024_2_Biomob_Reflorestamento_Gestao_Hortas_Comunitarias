@@ -1,42 +1,91 @@
 "use client"
 import { Eye, EyeOff } from "lucide-react"
+import { useRouter } from "next/navigation"
 import { useState } from "react"
 
 export default function RegisterForm() {
   const [showPassword, setShowPassword] = useState(false)
+  const [formData, setFormData] = useState({
+    nome: "",
+    cpf: "",
+    telefone: "",
+    email: "",
+    senha: "",
+    voluntario: false,
+  })
+
+  const router = useRouter()
+
   const togglePasswordVisibility = () => setShowPassword(!showPassword)
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value, type, checked } = e.target
+    setFormData(prev => ({
+      ...prev,
+      [name]: type === "checkbox" ? checked : value,
+    }))
+  }
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+
+    // Salva no localStorage
+    localStorage.setItem("user", JSON.stringify(formData))
+
+    // Simula modal de sucesso
+    alert("Cadastro realizado com sucesso!")
+
+    // Redireciona para login
+    router.push("/login")
+  }
+
   return (
-    <form className="grid grid-cols-2 gap-4">
+    <form className="grid grid-cols-2 gap-4" onSubmit={handleSubmit}>
       <div className="col-span-2 flex items-center space-x-2">
-        <input type="checkbox" id="voluntario" className="accent-emerald-600" />
+        <input
+          type="checkbox"
+          id="voluntario"
+          name="voluntario"
+          onChange={handleChange}
+          className="accent-emerald-600"
+        />
         <label htmlFor="voluntario" className="text-sm text-gray-700">Quero ser voluntário</label>
       </div>
 
       <input
         type="text"
+        name="nome"
         placeholder="Nome completo"
+        onChange={handleChange}
         className="w-full p-3 border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
       />
       <input
         type="text"
+        name="cpf"
         placeholder="CPF"
+        onChange={handleChange}
         className="w-full p-3 border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
       />
       <input
         type="text"
+        name="telefone"
         placeholder="(DDD) Telefone"
+        onChange={handleChange}
         className="w-full p-3 border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
       />
       <input
         type="email"
+        name="email"
         placeholder="Email"
+        onChange={handleChange}
         className="w-full p-3 border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
       />
       <div className="relative col-span-2 sm:col-span-1">
         <input
           type={showPassword ? "text" : "password"}
+          name="senha"
           placeholder="Mínimo de 6 caracteres"
+          onChange={handleChange}
           className="w-full p-3 border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
         />
         <button
